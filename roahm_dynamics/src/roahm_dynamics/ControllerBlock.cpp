@@ -69,10 +69,10 @@ void ControllerBlock::run()
         // update trajectory status
         if (current_trajectory_id != previous_trajectory_id) {
              // previously tracked a trajectory and just finished, close the current torque log file
-            torque_output_file.close();
+            data_file.close();
 
             // now it's going to be a new trajectory, create a new torque log file
-            torque_output_file.open("log/torque_output_" + std::to_string(current_trajectory_id) + ".txt");
+            data_file.open("log/data_output_" + std::to_string(current_trajectory_id) + ".txt");
 
             printf("New trajectory started: %ld at time %.9f", 
                     current_trajectory_id, 
@@ -226,11 +226,11 @@ void ControllerBlock::run()
             is_tracking_trajectory = true;
             // log torque
             auto duration_since_epoch = ctrl.stamp.time_since_epoch();
-            torque_output_file << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_since_epoch).count() << " ";
-            torque_output_file << state->pos.transpose() << " ";
-            torque_output_file << state->vel.transpose() << " ";
-            // torque_output_file << ctrl.torque.transpose() << std::endl;
-            torque_output_file << -state->torque.transpose() << std::endl;
+            data_file << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_since_epoch).count() << " ";
+            data_file << state->pos.transpose() << " ";
+            data_file << state->vel.transpose() << " ";
+            // data_file << ctrl.torque.transpose() << std::endl;
+            data_file << -state->torque.transpose() << std::endl;
             tracking_error_file << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_since_epoch).count() << " ";
             tracking_error_file << e.transpose() << " ";
             tracking_error_file << 1 << std::endl;
@@ -252,8 +252,8 @@ ControllerBlock::ControllerBlock(const std::string &block_name,
 {
     trajectories = std::make_shared<TrajectoryManager>();
     
-    torque_output_file.open("log/torque_output_" + std::to_string(trajectories->get_trajectory_id()) + ".txt");
-    torque_output_file << std::setprecision(12);
+    data_file.open("log/data_output_" + std::to_string(trajectories->get_trajectory_id()) + ".txt");
+    data_file << std::setprecision(12);
 
     tracking_error_file.open("log/tracking_error.txt");
 
@@ -270,7 +270,7 @@ ControllerBlock::ControllerBlock(const std::string &block_name,
 }
 
 ControllerBlock::~ControllerBlock() {
-    torque_output_file.close();
+    data_file.close();
     tracking_error_file.close();
 }
 

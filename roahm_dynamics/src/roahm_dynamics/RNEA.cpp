@@ -119,12 +119,12 @@ void MultiBodyDynamics::Yphi_passive(const VecX& q,
         double va5 = v_aux[i](4);
         double va6 = v_aux[i](5);
         
-        K[i] <<      a1,     a2 - v1*va3,     a3 + v1*va2, -v2*va3, v2*va2 - v3*va3,  v3*va2, v5*va2 - v2*va5 - v3*va6 + v6*va3,              a6 + v1*va5 - v4*va2,              v1*va6 - a5 - v4*va3,      v6*va5 - v5*va6,
-                 v1*va3,     a1 + v2*va3, v3*va3 - v1*va1,      a2,     a3 - v2*va1, -v3*va1,              v2*va4 - a6 - v5*va1, v4*va1 - v1*va4 - v3*va6 + v6*va3,              a4 + v2*va6 - v5*va3,      v4*va6 - v6*va4,
-                -v1*va2, v1*va1 - v2*va2,     a1 - v3*va2,  v2*va1,     a2 + v3*va1,      a3,              a5 + v3*va4 - v6*va1,              v3*va5 - a4 - v6*va2, v4*va1 - v1*va4 - v2*va5 + v5*va2,      v5*va4 - v4*va5,
-                      0,               0,               0,       0,               0,       0,                 - v2*va2 - v3*va3,                       v1*va2 - a3,                       a2 + v1*va3, a4 - v5*va3 + v6*va2,
-                      0,               0,               0,       0,               0,       0,                       a3 + v2*va1,                 - v1*va1 - v3*va3,                       v2*va3 - a1, a5 + v4*va3 - v6*va1,
-                      0,               0,               0,       0,               0,       0,                       v3*va1 - a2,                       a1 + v3*va2,                 - v1*va1 - v2*va2, a6 - v4*va2 + v5*va1;
+        K[i] << v6*va5 - v5*va6,      v5*va2 - v2*va5 - v3*va6 + v6*va3,              a6 + v1*va5 - v4*va2,              v1*va6 - a5 - v4*va3,      a1,     a2 - v1*va3, -v2*va3,     a3 + v1*va2, v2*va2 - v3*va3,  v3*va2,
+                v4*va6 - v6*va4,                   v2*va4 - a6 - v5*va1, v4*va1 - v1*va4 - v3*va6 + v6*va3,              a4 + v2*va6 - v5*va3,  v1*va3,     a1 + v2*va3,      a2, v3*va3 - v1*va1,     a3 - v2*va1, -v3*va1,
+                v5*va4 - v4*va5,                   a5 + v3*va4 - v6*va1,              v3*va5 - a4 - v6*va2, v4*va1 - v1*va4 - v2*va5 + v5*va2, -v1*va2, v1*va1 - v2*va2,  v2*va1,     a1 - v3*va2,     a2 + v3*va1,      a3,
+                a4 - v5*va3 + v6*va2,                  -v2*va2 - v3*va3,                       v1*va2 - a3,                       a2 + v1*va3,       0,               0,       0,               0,               0,       0,
+                a5 + v4*va3 - v6*va1,                       a3 + v2*va1,                  -v1*va1 - v3*va3,                       v2*va3 - a1,       0,               0,       0,               0,               0,       0,
+                a6 - v4*va2 + v5*va1,                       v3*va1 - a2,                       a1 + v3*va2,                  -v1*va1 - v2*va2,       0,               0,       0,               0,               0,       0;
 
         Yfull.block(6*i, 10*i, 6, 10) = K[i];
     }

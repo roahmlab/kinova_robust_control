@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
-#include <pinocchio/algorithm/rnea.hpp>
-#include "pinocchio/algorithm/rnea-derivatives.hpp"
-#include "pinocchio/algorithm/jacobian.hpp"
+#include "pinocchio/algorithm/rnea.hpp"
+#include "pinocchio/algorithm/regressor.hpp"
 #include "roahm_dynamics/RNEA.hpp"
 
 using namespace Roahm;
@@ -18,9 +17,14 @@ protected:
         const std::string model_path = "./models/urdf/gen3.urdf";
         modelPtr_ = std::make_shared<Model::model>(model_path);
 
-        q = Eigen::VectorXd::Random(modelPtr_->NB);
-        v = Eigen::VectorXd::Random(modelPtr_->NB);
-        a = Eigen::VectorXd::Random(modelPtr_->NB);
+        // disable motor dynamics in this test
+        modelPtr_->friction.setZero();
+        modelPtr_->damping.setZero();
+        modelPtr_->transmissionInertia.setZero();
+        modelPtr_->offset.setZero();
+        modelPtr_->model_pinocchio.friction.setZero();
+        modelPtr_->model_pinocchio.damping.setZero();
+        modelPtr_->model_pinocchio.armature.setZero();
     }
 
     // Tear down the test fixture
@@ -33,13 +37,13 @@ protected:
     Eigen::VectorXd q, v, a;
 };
 
-TEST_F(YourClassTest, TestInitialAndFinalConditions) {
+TEST_F(YourClassTest, TestInverseDynamics) {
     // Arrange
 
     // Act
-    q.resize(modelPtr_->NB);
-    v.resize(modelPtr_->NB);
-    a.resize(modelPtr_->NB);
+    q = Eigen::VectorXd::Random(modelPtr_->NB);
+    v = Eigen::VectorXd::Random(modelPtr_->NB);
+    a = Eigen::VectorXd::Random(modelPtr_->NB);
 
     // inverse dynamics using pinocchio
     pinocchio::rnea(
@@ -47,9 +51,14 @@ TEST_F(YourClassTest, TestInitialAndFinalConditions) {
         modelPtr_->data_pinocchio, 
         q, v, a);
 
-    // // inverse dynamics using roahm_dynamics
+    // inverse dynamics using roahm_dynamics
     MultiBodyDynamics dynamics(modelPtr_);
     dynamics.rnea(q, v, v, a);
+
+    // pinocchio::computeJointTorqueRegressor(
+    //     modelPtr_->model_pinocchio, 
+    //     modelPtr_->data_pinocchio, 
+    //     q, v, a);
 
     std::cerr << modelPtr_->data_pinocchio.tau.transpose() << std::endl;
     std::cerr << dynamics.tau.transpose() << std::endl;

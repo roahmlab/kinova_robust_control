@@ -92,7 +92,7 @@ class ControllerBlock : public ::Roahm::System::BaseBlock
     std::shared_ptr<TrajectoryManager> trajectories;
 
     // logger for torque messages
-    std::ofstream torque_output_file;
+    std::ofstream data_file;
     std::ofstream tracking_error_file;
     std::ifstream endeffector_inertial_file;
 

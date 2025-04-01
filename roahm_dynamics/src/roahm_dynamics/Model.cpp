@@ -150,10 +150,10 @@ model::model(
         if (mass_eps_input(i) < 0) {
             throw std::invalid_argument("mass_eps_input should always be non-negative!");
         }
-
-        phi_eps.segment(10 * i + 0, 6).setConstant(inertia_eps_input(i));
-        phi_eps.segment(10 * i + 6, 3).setConstant(com_eps_input(i));
-        phi_eps(10 * i + 9) = mass_eps_input(i);
+        
+        phi_eps(10 * i + 0) = mass_eps_input(i);
+        phi_eps.segment(10 * i + 1, 3).setConstant(com_eps_input(i));
+        phi_eps.segment(10 * i + 4, 6).setConstant(inertia_eps_input(i));
     }
 
     readRobotDynamicsFromPinocchio();
@@ -269,14 +269,7 @@ void model::readRobotDynamicsFromPinocchio() {
                                  model_pinocchio.jointPlacements[pinocchio_joint_id].translation());
         
         // mcI in Roy Featherstone's code (parallel axis theorem)
-        const Mat3 CC = Spatial::skew(model_pinocchio.inertias[pinocchio_joint_id].lever());
-        const double mm = model_pinocchio.inertias[pinocchio_joint_id].mass();
-        Mat3 II = model_pinocchio.inertias[pinocchio_joint_id].inertia().matrix();
-        II = II + mm * (CC * CC.transpose()); // apply parallel axis theorem
-
-        phi.segment(10 * i, 10) << II(0, 0), II(0, 1), II(0, 2), II(1, 1), II(1, 2), II(2, 2),
-                                   mm * model_pinocchio.inertias[pinocchio_joint_id].lever(),
-                                   mm;
+        phi.segment(10 * i, 10) = model_pinocchio.inertias[pinocchio_joint_id].toDynamicParameters();
 
         
         for (int j = 0; j < 10; j++) {

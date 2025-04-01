@@ -28,23 +28,13 @@ ament_python_install_package(${PROJECT_NAME})
 install(
   PROGRAMS
   scripts/test_services.py
-  scripts/test_waypoints.py
   scripts/pick_up_example.py
-  scripts/pick_up_and_down_example.py
-  scripts/ik_and_rrt_example_control_system.py
   scripts/run_experiment.py
-  scripts/run_complete_armour_demo.py
-  scripts/run_armour_exciting_trajectories.py
-  scripts/run_predefined_armour_exciting_trajectories.py
-  scripts/run_receding_armour_exciting_trajectories.py
-  scripts/run_online_sysid_demo.py
-  scripts/run_online_sysid_demo_harder.py
   scripts/trajectory_helper.py
   scripts/test_trajectories.py
   scripts/test_trajectories_dual_arm.py
   scripts/test_armtd_trajectories.py
   scripts/test_multiple_continuous_trajectories.py
-  scripts/run_exciting_trajectories.py
   scripts/test_receding_horizon_trajectories.py
   scripts/test_receding_horizon_trajectories_armtd.py
   scripts/parse_rosbag.py
