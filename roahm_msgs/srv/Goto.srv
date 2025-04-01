@@ -1,0 +1,5 @@
+# Joint angles
+float32[7] pos
+---
+# Resulting Joint Angles
+float32[7] pos

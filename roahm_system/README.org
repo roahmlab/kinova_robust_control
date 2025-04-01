@@ -1,0 +1,32 @@
+#+title: roahm_system
+System building blocks.
+
+* Components
+
+** Ports
+Abstract types for setting and getting data in a thread-safe way.
++ ~InputPort<T>~ - Input Port for data type ~T~
++ ~OutputPort<T>~ - Output Port for data type ~T~
+
+simple example:
+
+#+begin_src cpp :includes '(iostream vector string) :namespaces std :eval no
+AbstractOutputPort::SharedPtr op{OutputPort<int>::make_shared()};
+AbstractInputPort::SharedPtr ip1{InputPort<int>::make_shared()};
+AbstractInputPort::SharedPtr ip2{InputPort<int>::make_shared()};
+// connect
+ip1->connect(op);
+ip2->connect(op);
+#+end_src
+
+** Block
+A block contains an output port and any number of input port(s) which can be
+connected to other output ports. Each block is running in a separate thread and
+update their output periodically.
+
+see [[./test/block_test.cpp]] for more example.
+
+** System
+System is in charge of all the blocks and connect blocks together.
+
+see [[./test/system_test.cpp]] for more example.

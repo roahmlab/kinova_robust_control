@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import sys
+from roahm_experiments.services import KortexSrvs
+import rclpy
+
+rclpy.init()
+kortex_srv = KortexSrvs()
+
+kortex_srv.goto_name("Home")
+
+

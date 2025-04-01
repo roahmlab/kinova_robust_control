@@ -1,0 +1,6 @@
+# Predefined Positions:
+# Home, Zero, Packaging, Retract
+string name
+---
+# Resulting Joint Angles
+float32[7] pos

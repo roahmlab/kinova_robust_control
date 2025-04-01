@@ -1,0 +1,3 @@
+# Call to refresh joints enabled based on rosparam: /roahm/roahm_kortex/arm_enb
+---
+string arm_enb

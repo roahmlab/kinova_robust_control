@@ -1,0 +1,4 @@
+# end effector pos (x, y, z, theta_x, theta_y, theta_z) in degrees
+float32[6] pose
+---
+std_msgs/Bool success

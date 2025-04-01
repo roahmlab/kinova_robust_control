@@ -1,0 +1,159 @@
+/control_system:
+  ros__parameters:
+    ###
+    # Robot
+    ###
+    ip: "192.168.1.10"
+    model_path: "./models/urdf/gen3_2f85_fixed.urdf"
+    ros_traj_topic: "trajectory"
+    ros_traj_enb: false
+    debug: false
+
+    dual_arm: false
+    robot_id: 0
+
+    # motor dynamics parameters
+    friction: [0.5217383101288284, 0.5769579059927288, 0.4213397946418778, 0.4945515376566732, 0.1611070502661354, 0.1333491185514130, 0.1434440181717370]
+    damping: [10.5, 7.4064845817230722, 9.9727633408172860, 8.2667950822503915, 8.8572249026528151, 8.7110831569332845, 8.8881903638306934]
+    transmissionInertia: [8.03, 11.9962024615303644, 9.0025427861751517, 11.5806439316706360, 8.4665040917914123, 8.8537069373742430, 8.8587303664685315]
+    offset: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+    # model uncertainty parameters
+    friction_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    damping_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    transmissionInertia_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    mass_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    com_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    inertia_eps: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+
+    ###
+    # PARAMS
+    ###
+    # controllers
+    controller_type: "PID" # PID, GRAV_PID, ARMOUR 
+
+      # PID
+    Kp: [120.0, 200.0, 120.0, 120.0, 120.0, 20.0, 20.0]
+    Ki: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+    Kd: [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]
+
+      # passivity-based controller parameters
+    Kr: [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]
+
+      # Armour robust controller parameters
+    alpha: 20.
+    V_max: 1e-2
+    r_norm_threshold: 1e-8
+
+      # Althoff robust controller parameters
+    phi_p: 30.
+    phi_i: 0.1
+    kappa_p: 20.0
+    kappa_i: 2.0
+    max_error: 1.
+
+    # joint filter
+    enable_joint_filter: false
+    vfilter_a: [0.1, 0.1]
+    vfilter_b: [0.7, 0.2, 0.1]
+
+    has_init_pos: false
+    init_pos: [3.75, -1.0472, 0., -2.0944, 0., 1.5708, 0.]
+
+/kortex_system:
+  ros__parameters:
+    model_path: "./models/mjcf/kinova3/gen3_nof.mjcf"
+    ip: "192.168.1.10"
+    # gripper_path: "models/mjcf/robotiq_85_new.mjcf"
+    ros_traj_enb: false
+    # ros_traj_topic: "traj"
+    k_p: [2000., 2000., 2000., 2000., 2000., 2000., 2000.]
+    # k_d: [200., 200., 200., 200., 200., 200., 200.]
+    # init_pos: [0.16771284,  0.45731151, -0.02774898,  1.35511265,  0.01264979,
+    # 1.32916476,  0.13973865]
+    # arm_enb: 0b1111111 # Joints to enable LSB: joint 0
+
+/ros_kortex_system:
+  ros__parameters:
+    ip: "192.168.1.10"
+    # arm_enb: 0b1111111 # Joints to enable LSB: joint 0
+
+# /robust_control_system:
+#   ros__parameters:
+#     ###
+#     # Robot
+#     ###
+#     # model_path: "./models/mjcf/kinova3/gen3_gripper.mjcf"
+#     model_path: "./models/mjcf/kinova3/gen3_gripper.mjcf"
+#     ip: "192.168.1.10"
+#     # gripper_path: "models/mjcf/robotiq_85_new.mjcf"
+#     model_variance: 0.03
+#     ros_traj_topic: "trajectory"
+#     ros_traj_enb: false
+#     debug: false
+    
+#     ###
+#     # PARAMS
+#     ###
+#     k_r: [10., 10., 10., 10., 10., 10., 10.]
+#     alpha: 20.
+#     V_max: 2e-2
+#     r_norm_threshold: 1e-8
+#     phi_p: 30.
+#     phi_i: 0.1
+#     kappa_p: 20.0
+#     kappa_i: 2.0
+#     max_error: 1.
+
+#     # joint filter
+#     enable_joint_filter: false
+#     vfilter_a: [0.1, 0.1]
+#     vfilter_b: [0.7, 0.2, 0.1]
+#     init_pos: [3.75, -1.0472, 0., -2.0944, 0., 1.5708, 0.]
+#     # init_pos: [0.63735604,  0.91225046, -0.48255455,  2.03474617,  2.83734679,
+#     #    -0.12431312, -3.056072]
+#     # init_pos: [0.16771284,  0.45731151, -0.02774898,  1.35511265,  0.01264979,
+#     #     1.32916476,  0.13973865]
+
+# /armour_control_system:
+#   ros__parameters:
+#     ###
+#     # Robot
+#     ###
+#     model_path: "./models/mjcf/kinova3/gen3.mjcf"
+#     ip: "192.168.1.10"
+#     # gripper_path: "models/mjcf/robotiq_85_new.mjcf"
+#     model_variance: 0.03
+#     ros_traj_topic: "trajectory"
+#     # ros_traj_enb: false
+
+#     ###
+#     # PARAMS
+#     ###
+#     k_r: [10., 10., 10., 10., 10., 10., 10.]
+#     alpha: 20.
+#     V_max: 1e-4
+#     r_norm_threshold: 1e-7
+
+#     # joint filter
+#     enable_joint_filter: true
+#     vfilter_a: [0.1, 0.1]
+#     vfilter_b: [0.7, 0.2, 0.1]
+
+#     ### DEMO 11.18
+#     # pos 1
+#     init_pos: [0.28159142, 0.88980376, 3.6350845 , 4.73481646, 2.55565072,
+#        0.83405794, 2.05711487]
+#     # pos 2
+#     # init_pos: [4.56258737, 0.65299749, 3.39192523, 4.20470761, 2.86698255,
+#     #    0.41219441, 6.05075981]
+#     # pos3
+#     # init_pos: [4.12150776, 4.86341232, 4.92619181, 5.32175324, 4.43859918,
+#     #    1.44261935, 1.08688634]
+#     # pos4
+#     # init_pos: [5.46258385, 1.42774914, 1.52257288, 0.00973894, 5.16263157,
+#     #    1.50461344, 3.06743361]
+
+#     # traj2
+#     # init_pos: [0.63735604,  0.91225046, -0.48255455,  2.03474617,  2.83734679,
+#     #    -0.12431312, -3.056072]
