@@ -29,7 +29,6 @@ install(
   PROGRAMS
   scripts/test_services.py
   scripts/pick_up_example.py
-  scripts/run_experiment.py
   scripts/trajectory_helper.py
   scripts/test_trajectories.py
   scripts/test_trajectories_dual_arm.py
