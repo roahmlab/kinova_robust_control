@@ -2,8 +2,6 @@
 
 This package contains messages/service files used in other packages.
 
-## Messages
-
 ### KortexMeasurements.msg
 
 Joint information for Kinova Gen3 Arm.
@@ -41,9 +39,9 @@ For more information, please refer to [README in roahm_trajectories/](../roahm_t
 | dof                | int32        | degree of freedom of the robot (dimensions of the robot)           |
 | trajectory_type    | int32        | the type of the trajectories to track                              |
 | is_gripper_open    | bool         | open the gripper or not (not used)                                 |
-| reset              | bool         | not used                                                           |
+| reset              | bool         | currently not used                                                           |
 
-### Debug.msg
+<!-- ### Debug.msg
 
 | Name        | Type            | Description                                            |
 | ----------- | --------------- | ------------------------------------------------------ |
@@ -56,4 +54,4 @@ For more information, please refer to [README in roahm_trajectories/](../roahm_t
 | torque_curr | float32[7]      | measured torque for each joint                         |
 | torque_calc | float32[7]      | calculated torque for each joint by dynamics algorithm |
 | e           | float32[7]      | position error computed by dynamics algorithm          |
-| e_d         | float32[7]      | velocity error computed by dynamics algorithm          |
+| e_d         | float32[7]      | velocity error computed by dynamics algorithm          | -->

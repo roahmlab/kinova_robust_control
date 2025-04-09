@@ -25,8 +25,8 @@ How parameters are stored in the vector:
  t_brake]
 ```
 
-Note that ARMTD trajectory is not 2nd-order continuous, which makes the robust controller struggle to track.
-You should track this trajectory using a PID controller or PID controller with gravity compensation.
+Note that ARMTD trajectory is **not 2nd-order continuous**, which could make the robust controller **struggle to track**.
+You should consider tracking this trajectory using a PID controller or PID controller with gravity compensation.
 
 ### ARMOUR_TRAJ (0x3002)
 The trajectory used in ARMOUR (Section IX.A, https://arxiv.org/abs/2301.13308)
@@ -38,6 +38,9 @@ A degree-5 Bezier curve that satisfies the following properties:
 4. The position ends at a provided parameter q1.
 5. The velocity ends at 0.
 6. The acceleration ends at 0.
+
+This is basically a trajectory that tells the robot to **reach and stop at** a particular position starting from a certain initial condition.
+This is the **most commonly used** trajectory in most applications.
 
 Number of parameters: 4 * num_joints (4*7 = 28 for Kinova-gen3)
 
@@ -79,7 +82,7 @@ How parameters are stored in the vector:
 
 There are certain rules that you should follow to send different types of trajectories to execute.
 That's why we implemented a trajectory manager to make sure the trajectory messages are formulated properly.
-The trajectory manager is running together with a controller instance and keeps listening to any new trajectory message.
+The trajectory manager is running together within the controller instance and keeps listening to any new trajectory message.
 It has a queue that stores all received trajectory messages and deal with them in sequence.
 If it receives a trajectory message that contains an invalid trajectory (we will explain what "invalid" means later), it will pop out a warning and IGNORE this trajectory.
 It is **YOUR RESPONSIBILITY** to make sure the rules are strictly followed.
@@ -89,7 +92,7 @@ There are several important concepts here in terms of definition of a trajectory
 1. All time-related variables in the following discussion is in the unit of **SECONDS**.
 2. `start_time`: The **global** time frame that the trajectory will be started. Check the concept of [Unix Time](https://en.wikipedia.org/wiki/Unix_time).
 3. `trajectory_duration`: The total duration that the trajectory is defined. You have to make sure that the trajectory is mathematically computable on the interval of `[0, trajectory_duration]`. For example, regular Bezier curves are defined only on [0,1]. It returns meaningless values beyond that range.
-4. `duration`: The duration that the trajectory will be played. In other words, the robot should stop or switch to the next valid trajectory at `start_time + duration`. `duration` does not have to be equal to `trajectory_duration`. For [receding horizon](https://en.wikipedia.org/wiki/Model_predictive_control) trajectories, the duration is always smaller than `trajectory_duration`.
+4. `duration`: The duration that the trajectory will be played. In other words, the robot should either stop safeely or switch to the next valid trajectory at `start_time + duration`. `duration` does not have to be equal to `trajectory_duration`. For [receding horizon](https://en.wikipedia.org/wiki/Model_predictive_control) trajectories, the duration is always smaller than `trajectory_duration`. However, `duration` can never be larger than `trajectory_duration`.
 5. The time that will be input to class `Trajectory` and class `TrajectoryManager` will always be in **global** time frame.
 
 ### Trajectory Message Rules
@@ -97,7 +100,7 @@ There are several important concepts here in terms of definition of a trajectory
 2. The trajectory should never start eariler than any other previous trajectories (that have been received by the trajectory manager prior to this trajectory).
 3. `duration` should never be larger than `trajectory_duration`.
 4. For two receding horizon trajectories, they should be 2nd-order continuous. For example, traj1 with `trajectory_duration = 2`, `duration = 1`, `start_time = 0` and traj2 with `trajectory_duration = 2`, `duration = 1`, `start_time = 1` are two valid receding horizon trajectories. traj2 is starting in the middle of traj1. As a result, the position, the velocity, and the acceleration are required to be equal for traj1 in the middle and traj2 at the beginning, so that they are connected not only on position, but also on velocity and acceleration. **Note that the condition on acceleration can be relaxed if you are working with ARMTD trajectories!**
-5. If there is only one trajectory left in the queue of the trajectory manager and there is no new trajectory messages received. The trajectory manager will ignore `duration` and play the trajectory until its end (`trajectory_duration`). So it is a good habit to send a trajectory that always has 0 velocity and 0 acceleration at the end.
+5. If there is only one trajectory left in the queue of the trajectory manager and there is no new trajectory messages received. The trajectory manager will ignore `duration` and play the trajectory until its end (`trajectory_duration`). So it is a good habit to always send a trajectory **that has 0 velocity and 0 acceleration at the end**, so that the robot stops smoothly.
 
 ### Two Main Scenarios We Care About
 

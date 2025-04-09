@@ -55,14 +55,6 @@ TEST_F(YourClassTest, TestInverseDynamics) {
     MultiBodyDynamics dynamics(modelPtr_);
     dynamics.rnea(q, v, v, a);
 
-    // pinocchio::computeJointTorqueRegressor(
-    //     modelPtr_->model_pinocchio, 
-    //     modelPtr_->data_pinocchio, 
-    //     q, v, a);
-
-    std::cerr << modelPtr_->data_pinocchio.tau.transpose() << std::endl;
-    std::cerr << dynamics.tau.transpose() << std::endl;
-
     // Assert
     for (int i = 0; i < modelPtr_->NB; i++) {
         ASSERT_NEAR(modelPtr_->data_pinocchio.tau(i), dynamics.tau(i), 1e-8);

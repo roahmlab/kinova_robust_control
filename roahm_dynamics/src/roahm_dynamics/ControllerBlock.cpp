@@ -74,16 +74,15 @@ void ControllerBlock::run()
             // now it's going to be a new trajectory, create a new torque log file
             data_file.open("log/data_output_" + std::to_string(current_trajectory_id) + ".txt");
 
-            printf("New trajectory started: %ld at time %.9f", 
-                    current_trajectory_id, 
-                    std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count() / 1.0e9);
-
             if (traj != nullptr) {
+                printf("New trajectory started: %ld at time %.9f", 
+                        current_trajectory_id, 
+                        std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count() / 1.0e9);
                 printf(" Trajectory duration: %.9f\n", traj->duration);
             }
-            else {
-                printf("\n");
-            }
+
+            // reset the controller
+            reset();
         }
 
         previous_trajectory_id = current_trajectory_id;
@@ -127,37 +126,24 @@ void ControllerBlock::run()
 
                 ctrl.frame_id = state->frame_id + 1;
                 ctrl.stamp = std::chrono::system_clock::now();
-
-                // auto start1 = std::chrono::high_resolution_clock::now();
                 ctrl.torque = update(inputs);
-                // auto end1 = std::chrono::high_resolution_clock::now();
-                // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start1);
-                // printf("Controller update time: %ld us\n", duration.count());
                 ctrl.is_gripper_open = is_gripper_open;
                 
                 // check torque limits
                 bool exceed_limit = false;
                 for (int i = 0; i < robot_model->NB; i++) {
                     if (fabs(ctrl.torque(i)) >= TORQUE_LIMITS[i]) {
-                        // throw std::runtime_error("controller.cpp: update(): Torque exceeds limit!");
                         logger.warn("Torque exceeds limit when trying to stay at current position!");
                         exceed_limit = true;
 
                         printf("Motor %d: Torque: %f, Limit: %f\n", i, ctrl.torque(i), TORQUE_LIMITS[i]);
+                        
+                        // throw std::runtime_error("controller.cpp: update(): Torque exceeds limit!");
 
                         // saturate torque (95% of limit)
                         ctrl.torque(i) = copysign(0.95 * TORQUE_LIMITS[i], ctrl.torque(i));
                     }
                 }
-
-                // if (exceed_limit) {
-                //     std::cerr << "Debug info:\n";
-                //     std::cerr << "pdes_static: " << pdes_static.transpose() << std::endl;
-                //     std::cerr << "vdes_static: " << vdes_static.transpose() << std::endl;
-                //     std::cerr << "ades_static: " << ades_static.transpose() << std::endl;
-                //     std::cerr << "state->pos: " << state->pos.transpose() << std::endl;
-                //     std::cerr << "state->vel: " << state->vel.transpose() << std::endl;
-                // }
 
                 // send out torque command but do not log the torque
                 default_output->set<ControlMsg>(ctrl);
@@ -190,37 +176,42 @@ void ControllerBlock::run()
 
             ctrl.frame_id = state->frame_id + 1;
             ctrl.stamp = std::chrono::system_clock::now();
-
-            // auto start1 = std::chrono::high_resolution_clock::now();
             ctrl.torque = update(inputs);
-            // auto end1 = std::chrono::high_resolution_clock::now();
-            // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start1);
-            // printf("Controller update time: %ld us\n", duration.count());
+
             ctrl.is_gripper_open = traj->is_gripper_open;
             
             // check torque limits
+            VecX torque_copy = ctrl.torque;
             bool exceed_limit = false;
             for (int i = 0; i < robot_model->NB; i++) {
                 if (fabs(ctrl.torque(i)) >= TORQUE_LIMITS[i]) {
-                    // throw std::runtime_error("controller.cpp: update(): Torque exceeds limit!");
                     logger.warn("Torque exceeds limit when tracking a trajectory!");
                     exceed_limit = true;
 
                     printf("Motor %d: Torque: %f, Limit: %f\n", i, ctrl.torque(i), TORQUE_LIMITS[i]);
+
+                    // throw std::runtime_error("controller.cpp: update(): Torque exceeds limit!");
 
                     // saturate torque (95% of limit)
                     ctrl.torque(i) = copysign(0.95 * TORQUE_LIMITS[i], ctrl.torque(i));
                 }
             }
 
-            // if (exceed_limit) {
-            //     std::cerr << "Debug info:\n";
-            //     std::cerr << "pdes: " << pdes.transpose() << std::endl;
-            //     std::cerr << "vdes: " << vdes.transpose() << std::endl;
-            //     std::cerr << "ades: " << ades.transpose() << std::endl;
-            //     std::cerr << "state->pos: " << state->pos.transpose() << std::endl;
-            //     std::cerr << "state->vel: " << state->vel.transpose() << std::endl;
-            // }
+            if (exceed_limit) {
+                // std::cerr << "Debug info:\n";
+                std::cerr << "pdes: " << pdes.transpose() << std::endl;
+                std::cerr << "vdes: " << vdes.transpose() << std::endl;
+                std::cerr << "ades: " << ades.transpose() << std::endl;
+                std::cerr << "state->pos: " << state->pos.transpose() << std::endl;
+                std::cerr << "state->vel: " << state->vel.transpose() << std::endl;
+                std::cerr << "e: " << e.transpose() << std::endl;
+                std::cerr << "ed: " << ed.transpose() << std::endl;
+                std::cerr << "tau: " << torque_copy.transpose() << std::endl;
+                // throw std::runtime_error("controller.cpp: update(): Torque exceeds limit!");
+            }
+
+            // send out torque command
+            default_output->set<ControlMsg>(ctrl);
 
             // update tracking status
             is_tracking_trajectory = true;
@@ -229,14 +220,11 @@ void ControllerBlock::run()
             data_file << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_since_epoch).count() << " ";
             data_file << state->pos.transpose() << " ";
             data_file << state->vel.transpose() << " ";
-            // data_file << ctrl.torque.transpose() << std::endl;
-            data_file << -state->torque.transpose() << std::endl;
+            data_file << ctrl.torque.transpose() << std::endl;
+            // data_file << -state->torque.transpose() << std::endl;
             tracking_error_file << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_since_epoch).count() << " ";
             tracking_error_file << e.transpose() << " ";
             tracking_error_file << 1 << std::endl;
-
-            // send out torque command
-            default_output->set<ControlMsg>(ctrl);
         }
     }
 }

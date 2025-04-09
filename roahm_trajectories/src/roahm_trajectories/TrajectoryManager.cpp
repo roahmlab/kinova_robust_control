@@ -25,12 +25,13 @@ bool TrajectoryManager::add_trajectory(const std::shared_ptr<const Trajectory>& 
     if (t_rel > traj->start_time) 
     {
         // printf("Debug: %.8f %.8f %.8f\n", t_rel, traj->start_time, t_rel - traj->start_time);
-        // printf("TrajectoryManager::add_trajectory: The trajectory is already started!\n");
+        // printf("Warning: The trajectory is already started!\n");
         return false;
     }
 
     if (trajectories.empty()) {
         trajectories.push_back(traj);
+        printf("Received a new trajectory, start at %.9f with duration %f\n", traj->start_time, traj->duration);
         return true;
     }
 
@@ -56,8 +57,8 @@ bool TrajectoryManager::add_trajectory(const std::shared_ptr<const Trajectory>& 
         const TrajectoryData traj_start = 
             traj->compute(traj->start_time);
 
-        if (!Utils::ifTwoVectorEqual(last_traj_end.pos, traj_start.pos, 1e-4)) {
-            Utils::ifTwoVectorEqual(last_traj_end.pos, traj_start.pos, 1e-4, true);
+        if (!Utils::ifTwoVectorEqual(Utils::wrapToPi(last_traj_end.pos), Utils::wrapToPi(traj_start.pos), 1e-4)) {
+            Utils::ifTwoVectorEqual(Utils::wrapToPi(last_traj_end.pos), Utils::wrapToPi(traj_start.pos), 1e-4, true);
             // throw std::invalid_argument("The new trajectory does not start smoothly in position!");
             printf("Warning: The new trajectory does not start smoothly in position!\n");
             return false;
@@ -76,6 +77,7 @@ bool TrajectoryManager::add_trajectory(const std::shared_ptr<const Trajectory>& 
     }
 
     trajectories.push_back(traj);
+    printf("Received a new trajectory, start at %.9f with duration %f\n", traj->start_time, traj->duration);
 
     return true;
 }
@@ -113,6 +115,7 @@ TrajectoryData TrajectoryManager::get_desired(const decltype(std::chrono::system
             {
                 trajectories.pop_front();
                 trajectory_id++;
+                printf("TrajectoryManager::get_desired: The first trajectory has been executed!\n");
             }
             else // if (trajectories.size() == 1) 
             {
@@ -129,6 +132,7 @@ TrajectoryData TrajectoryManager::get_desired(const decltype(std::chrono::system
                     // we will just let the robot stop here
                     trajectories.pop_front();
                     trajectory_id++;
+                    printf("TrajectoryManager::get_desired: The last trajectory has been executed!\n");
                 }
             }
             // else // if (trajectories.size() == 0) 
@@ -147,7 +151,6 @@ TrajectoryData TrajectoryManager::get_desired(const decltype(std::chrono::system
     // fetch valid trajectory
     if (trajectories.empty())
     {
-        // printf("TrajectoryManager::get_desired: There are no new trajectories any more!\n");
         return result;
     }
 

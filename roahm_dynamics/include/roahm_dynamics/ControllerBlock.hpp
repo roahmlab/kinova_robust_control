@@ -38,6 +38,11 @@ class ControllerBlock : public ::Roahm::System::BaseBlock
      **/
     virtual VecX update(const InputPack &inputs) = 0;
 
+    /**
+     * @brief reset the controller, for example, set error integral to 0
+     **/
+    virtual void reset() {};
+
   protected:
     /**
      * @brief constructor directly given robot model
@@ -69,8 +74,8 @@ class ControllerBlock : public ::Roahm::System::BaseBlock
         const VecX& e;
         const VecX& ed;
 
-        // time difference
-        const double delta_t;
+        // time difference between previous update and current update
+        double delta_t;
     };
 
   protected:
@@ -94,6 +99,7 @@ class ControllerBlock : public ::Roahm::System::BaseBlock
     // logger for torque messages
     std::ofstream data_file;
     std::ofstream tracking_error_file;
+
     std::ifstream endeffector_inertial_file;
 
     size_t previous_trajectory_id = 0;
