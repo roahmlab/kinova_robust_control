@@ -6,13 +6,13 @@ This repository not only integrates the default position control from Kinova, bu
 
 ## Structure
 The functions in kinova_robust_control codebase are organized into several folders.
-- `roahm_dynamics`: Core controller implementations
-- `roahm_experiments`: Example scripts for testing controllers
-- `roahm_kortex`: Interface with Kinova robots
-- `roahm_msgs`: ROS2 message and service definitions
-- `roahm_system`: System architecture and block-based design
-- `roahm_trajectories`: Trajectory computation and management
-- `roahm_utils`: Utility functions and logging
+- `dynamics`: Core controller implementations
+- `experiments`: Example scripts for testing controllers
+- `kortex`: Interface with Kinova robots
+- `customized_msgs`: ROS2 message and service definitions
+- `system`: System architecture and block-based design
+- `trajectories`: Trajectory computation and management
+- `utils`: Utility functions and logging
 
 ## Getting Started
 
@@ -20,18 +20,18 @@ The functions in kinova_robust_control codebase are organized into several folde
 We provide a detailed documentation on how to install the code in [installation/README.md](installation/README.md).
 
 ### Before using this codebase:
-1. Due to limited time and resources, we were not able to make this codebase fully user-friendly. We strongly recommend carefully reviewing all available documentation, especially the ros2 Python scripts in `roahm_experiments/`, to fully understand how the controller operates.
+1. Due to limited time and resources, we were not able to make this codebase fully user-friendly. We strongly recommend carefully reviewing all available documentation, especially the ros2 Python scripts in `experiments/`, to fully understand how the controller operates.
 2. You should make sure that your Kinova arm is equipped with an **emergency stop button**, so you can immediately shut it down in case of unexpected behavior.
-3. You should also make sure that there are no obstacles around the arm when you run the examples in `roahm_experiments/`.
+3. You should also make sure that there are no obstacles around the arm when you run the examples in `experiments/`.
 
 ### Read the following READMEs in sequence:
-1. Read [roahm_dynamics/README.md](roahm_dynamics/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
-2. Read [roahm_trajectories/README.md](roahm_trajectories/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
-3. Read [roahm_kortex/README.md](roahm_kortex/README.md) to learn more about the controller instance and related parameters.
-4. Read [roahm_experiments/README.md](roahm_experiments/README.md) for examples that send trajectory messages to the controller instance and move the robot along the desired trajectories.
+1. Read [dynamics/README.md](dynamics/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
+2. Read [trajectories/README.md](trajectories/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
+3. Read [kortex/README.md](kortex/README.md) to learn more about the controller instance and related parameters.
+4. Read [experiments/README.md](experiments/README.md) for examples that send trajectory messages to the controller instance and move the robot along the desired trajectories.
 
 ### Other stuff for customizing the functions:
-1. Read [roahm_msgs/README.md](roahm_msgs/README.md) for definitions of all ros2 messages if you want to customize your own messages.
+1. Read [customized_msgs/README.md](customized_msgs/README.md) for definitions of all ros2 messages if you want to customize your own messages.
 
 ## Acknowlgement
 

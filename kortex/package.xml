@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>kortex</name>
+  <version>0.0.0</version>
+  <description>kortex wrapper</description>
+  <maintainer email="cctom@umich.edu">Che Chen</maintainer>
+  <license>3-clause BSD</license>
+  <author email="cctom@umich.edu">Che Chen</author>
+  <author email="rajivbh@umich.edu">Rajiv Bharadwaj</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <depend>utils</depend>
+  <depend>trajectories</depend>
+  <depend>customized_msgs</depend>
+  <depend>system</depend>
+  <depend>dynamics</depend>
+  <depend>filter</depend>
+  <depend>rclcpp</depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
