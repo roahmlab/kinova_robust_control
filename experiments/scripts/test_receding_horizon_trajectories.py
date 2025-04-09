@@ -65,9 +65,6 @@ class TestNode(Node):
                 np.zeros(7), 
                 np.zeros(7), 
                 self.q_goal)
-            
-            print(self.q_goal)
-            print(self.q_current)
         elif idx == 1:
             logging.info("First trajectory to move forward")
 

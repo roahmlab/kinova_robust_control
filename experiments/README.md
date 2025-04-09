@@ -42,7 +42,7 @@ ros2 run kortex control_system --ros-args --params-file ./config.yaml
 ```
 
 ### test_trajectories.py
-This script contains the most naive example of sending trajectory messages.
+This script contains **the most basic example** of **sending trajectory messages**.
 We formulate a Armour trajectory message that asks the arm to move forward 0.05 radian slowly from its current position and send this message periodically.
 Since the duration of the trajectory is **smaller than** the time gap bewteen two messages, the arm should move and stop repetitively.
 
@@ -52,7 +52,7 @@ ros2 run experiments test_trajectories.py
 ```
 
 ### test_trajectories_dual_arm.py
-This script contains the most naive example of sending two different trajectory messages to two robots at the same time.
+This script contains **the most basic example** of **sending two different trajectory messages to two robots at the same time**.
 We formulate a Armour trajectory message that asks the arm to move forward 0.05 radian slowly from its current position and send this message periodically.
 Since the duration of the trajectory is **smaller than** the time gap bewteen two messages, the arm should move and stop repetitively.
 
@@ -64,7 +64,7 @@ ros2 run experiments test_trajectories_dual_arm.py
 ```
 
 <!-- ### test_armtd_trajectories.py
-This script contains the most naive example of sending ARMTD trajectory messages.
+This script contains the most basic example of sending ARMTD trajectory messages.
 
 Launch the script in `/workspaces/kinova_robust_control_docker/` using:
 ```shell
