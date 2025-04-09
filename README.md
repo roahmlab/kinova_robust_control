@@ -57,7 +57,7 @@ Zichang Zhou (zhouzichang1234@gmail.com): Implemented other controller compariso
 `ARMOUR` is released under a [GNU license](LICENSE). 
 For a closed-source version of `ARMOUR` for commercial purpose, please contact the authors. 
 
-An overview of the theoretical and implementation details has been published in a[arxiv](https://arxiv.org/abs/2301.13308). 
+An overview of the theoretical and implementation details has been published in [arxiv](https://arxiv.org/abs/2301.13308). 
 If you use `ARMOUR` in an academic work, please cite using the following BibTex entry:
 ```bibtex
 @article{michaux2023can,

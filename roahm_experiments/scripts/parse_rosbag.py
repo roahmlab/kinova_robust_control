@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser.add_argument('bag_name', type=str, help='The name of the ROS bag file to process.')
     args = parser.parse_args()
 
-    bag_path = "/home/baiyuew/ROAHM/planning_wksp/" + args.bag_name + "/"
+    bag_path = "/workspaces/kinova_robust_control_docker/" + args.bag_name + "/"
 
     # joint info
     t = np.array([])
