@@ -44,7 +44,7 @@ This work is developed in [ROAHM Lab](https://www.roahmlab.com/).
 
 [Bohao Zhang](https://cfather.github.io/) (jimzhang@umich.edu): **Current maintainer**, Robust controller implementation in C++.
 
-Jonathan Michaux (jmichaux@umich.edu): Robust controller theory developer.
+[Jonathan Michaux](https://jonmichaux.com/) (jmichaux@umich.edu): Robust controller theory developer.
 
 Patrick D. Holmes (pdholmes@umich.edu): Robust controller theory developer.
 
@@ -54,7 +54,7 @@ Zichang Zhou (zhouzichang1234@gmail.com): Implemented other controller compariso
 
 ## License
 
-`ARMOUR` is released under a [GNU license](LICENSE). 
+`ARMOUR` is released under a [3-clause BSD license](LICENSE). 
 For a closed-source version of `ARMOUR` for commercial purpose, please contact the authors. 
 
 An overview of the theoretical and implementation details has been published in [arxiv](https://arxiv.org/abs/2301.13308). 

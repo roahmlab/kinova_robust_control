@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>experiment scripts</description>
   <maintainer email="cctom@umich.edu">Che Chen</maintainer>
-  <license>MIT</license>
+  <license>3-clause BSD</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_python</buildtool_depend>

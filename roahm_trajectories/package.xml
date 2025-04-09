@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>Contain multiple trajectory definition and implementation</description>
   <maintainer email="jimzhang@umich.edu">Bohao Zhang</maintainer>
-  <license>MIT</license>
+  <license>3-clause BSD</license>
   <author email="jimzhang@umich.edu">Bohao Zhang</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
