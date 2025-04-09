@@ -63,13 +63,13 @@ Launch the script in `/workspaces/kinova_robust_control_docker` using:
 ros2 run roahm_experiments test_trajectories_dual_arm.py
 ```
 
-### test_armtd_trajectories.py
+<!-- ### test_armtd_trajectories.py
 This script contains the most naive example of sending ARMTD trajectory messages.
 
 Launch the script in `/workspaces/kinova_robust_control_docker/` using:
 ```shell
 ros2 run roahm_experiments test_armtd_trajectories.py
-```
+``` -->
 
 ### test_multiple_continuous_trajectories.py
 We formulate a Bezier trajectory message that asks the arm to move forward 0.1 radian slowly from its current position and send this message periodically.
@@ -93,19 +93,19 @@ Launch the script in `/workspaces/kinova_robust_control_docker/` using:
 ros2 run roahm_experiments test_receding_horizon_trajectories.py
 ```
 
-### test_receding_horizon_trajectories_armtd.py
+<!-- ### test_receding_horizon_trajectories_armtd.py
 Similar tests but for ARMTD trajectories.
 
 Launch the script in `/workspaces/kinova_robust_control_docker/` using:
 ```shell
 ros2 run roahm_experiments test_receding_horizon_trajectories_armtd.py
-```
+``` -->
 
-### pick_up_and_down_example.py
+<!-- ### pick_up_and_down_example.py
 This script contains a simple example of picking up and placing down an object at a predefined location, using `control_system` (torque control mode).
 It requires [RAPTOR](https://github.com/roahmlab/RAPTOR) for a pybind version of inverse kinematics solver.
 
 Launch the script in `/workspaces/kinova_robust_control_docker/` using:
 ```shell
 ros2 run roahm_experiments pick_up_and_down_example.py
-```
+``` -->

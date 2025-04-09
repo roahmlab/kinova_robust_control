@@ -20,9 +20,9 @@ ik_solver = pinocchioInverseKinematicsSolver()
 q_init = np.array([0.0, 0.262, 3.142, -2.2692, 0.0, -0.6108, 1.571])
 kortex_srv.goto(q_init.astype(np.float32))
 
-# predefined pick up positions in the arm frame
-approach_pos = np.array([0.52, -0.1778, 0.2])
-retract_pos = np.array([0.52, -0.1778, 0.1])
+# predefined pick up positions in the arm base frame
+approach_pos = np.array([0.52, -0.1778, 0.15])
+grasp_pos = np.array([0.52, -0.1778, 0.05])
 
 # solve IK for approach and retract configurations
 approach_q, if_success = ik_solver.solve(
@@ -37,7 +37,7 @@ else:
 
 grasp_q, if_success = ik_solver.solve(
     approach_q, 
-    retract_pos,
+    grasp_pos,
     ik_solver.desiredRotation_z_neg)
 if if_success:
     print(grasp_q)

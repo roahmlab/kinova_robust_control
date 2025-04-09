@@ -24,11 +24,16 @@ class TestNode(Node):
         # joint measurement
         self.joint_info_sub = self.create_subscription(
             KortexMeasurements, "/joint_info", self._joint_info_callback, 10)
+        
+        self.receding_horizon_duration = 1.0 # seconds
 
-        self.create_timer(0.6, self._timer_callback)
+        self.create_timer(
+            0.4, # make sure this is less than the receding_horizon_duration
+            self._timer_callback)
 
-        self.q_start = -np.ones(7)
-        self.increment = 0.35 * np.ones(7)
+        # self.q_start = np.array([0.0, 0.262, 3.142, -2.269, 0.0, 0.960, 1.571]) # home position
+        self.q_start = np.zeros(7) # zero position
+        self.q_step = 0.1 * np.ones(7)
 
         self.command_id = 0
         self.q_goal = []
@@ -54,21 +59,24 @@ class TestNode(Node):
             self.q_goal = self.q_start
             self.traj_msg = trajectory_helper.formulate_armour_trajectory_message(
                 self.time_start, 
-                8.0, 
-                8.0, 
+                6.0, 
+                6.0, 
                 self.q_current, 
                 np.zeros(7), 
                 np.zeros(7), 
                 self.q_goal)
+            
+            print(self.q_goal)
+            print(self.q_current)
         elif idx == 1:
             logging.info("First trajectory to move forward")
 
-            self.time_start = self.time_start + 8.0
-            self.q_goal = self.q_goal + self.increment
+            self.time_start = self.time_start + 6.0
+            self.q_goal = self.q_goal + self.q_step
             self.traj_msg = trajectory_helper.formulate_armour_trajectory_message(
                 self.time_start, 
-                1.6, 
-                0.8, 
+                self.receding_horizon_duration, 
+                0.5 * self.receding_horizon_duration, 
                 self.q_start, 
                 np.zeros(7), 
                 np.zeros(7), 
@@ -76,16 +84,16 @@ class TestNode(Node):
         elif idx <= 5:
             logging.info("Continuous trajectory to move forward in receding horizon")
 
-            self.time_start = self.time_start + 0.8
-            self.q_goal = self.q_goal + self.increment
+            self.time_start = self.time_start + 0.5 * self.receding_horizon_duration
+            self.q_goal = self.q_goal + self.q_step
             self.traj_msg = trajectory_helper.formulate_armour_trajectory_message_continuous_with_previous(
                 self.time_start, 
-                1.6, 
-                0.8, 
+                self.receding_horizon_duration, 
+                0.5 * self.receding_horizon_duration, 
                 self.q_goal, 
                 self.traj_msg)
         elif idx == 6:
-            logging.info("Send an invalid trajectory and the robot should still follow the previous trajectory")
+            logging.info("Send an invalid trajectory, so the robot should ignore this one and still follow the previous trajectory until stopping")
 
             self.time_start = self.time_start - 1000.0 # invalid start time
             self.traj_msg = trajectory_helper.formulate_armour_trajectory_message(

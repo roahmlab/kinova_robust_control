@@ -26,10 +26,13 @@ class TestNode(Node):
         # joint measurement
         self.joint_info_sub = self.create_subscription(
             KortexMeasurements, "/joint_info", self._joint_info_callback, 10)
+        
+        self.PERIOD = 3.0 # seconds
+        self.q_step = 0.1 # rad
 
-        self.create_timer(1.6, self._timer_callback)
-
-        self.PERIOD = 3.0
+        self.create_timer(
+            2.0, # send 3.0 seconds trajectory every 2.0 seconds, note that these trajectories are continuous in time
+            self._timer_callback)
 
         self.command_id = 0
         self.q_start = []
@@ -54,7 +57,7 @@ class TestNode(Node):
             self.q_start = self.q_current
             self.time_start = current_time + 0.025
         else:
-            self.q_start = self.q_start + 0.05
+            self.q_start = self.q_start + self.q_step
             self.time_start = self.time_start + self.PERIOD
 
         # self.traj_msg.traj_data = np.zeros(TrajectoryMacros.TRAJECTORY_DATA_SIZE, dtype=np.float64)
@@ -74,14 +77,16 @@ class TestNode(Node):
         # self.traj_msg.is_gripper_open = False
         # self.traj_msg.reset = False
 
+        # we can now use the helper function to formulate the trajectory message
         self.traj_msg = trajectory_helper.formulate_armour_trajectory_message(
-            self.time_start, 
-            self.PERIOD, 
-            self.PERIOD, 
-            self.q_start, 
-            np.zeros(7), 
-            np.zeros(7), 
-            self.q_start + 0.1)
+            self.time_start, # starting time of the trajectory
+            self.PERIOD, # duration of the trajectory
+            self.PERIOD, # duration to replay the trajectory
+            self.q_start, # starting position
+            np.zeros(7), # starting velocity
+            np.zeros(7), # starting acceleration
+            self.q_start + self.q_step # ending position (0.1 radian forward for each joint)
+        )
 
         # publish
         self.traj_pub.publish(self.traj_msg)

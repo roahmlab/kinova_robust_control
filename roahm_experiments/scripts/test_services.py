@@ -8,7 +8,7 @@ rclpy.init()
 kortex_srv = KortexSrvs()
 
 kortex_srv.goto_name("Zero")
-kortex_srv.open_gripper()
+kortex_srv.reset_gripper()
 
 kortex_srv.goto_name("Home")
 kortex_srv.close_gripper()

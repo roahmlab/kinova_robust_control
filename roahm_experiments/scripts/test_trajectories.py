@@ -18,14 +18,21 @@ class TestNode(Node):
         super().__init__("trajectory_test_node")
         # trajectory publisher
         self.traj_pub = self.create_publisher(
-            TrajectoryMsg, "/trajectory", 10)
+            TrajectoryMsg, 
+            "/trajectory", # should be consistent with "ros_traj_topic" in config.yaml
+            10)
         self.traj_msg: TrajectoryMsg = TrajectoryMsg()
 
         # joint measurement
         self.joint_info_sub = self.create_subscription(
-            KortexMeasurements, "/joint_info", self._joint_info_callback, 10)
+            KortexMeasurements, 
+            "/joint_info", 
+            self._joint_info_callback, 
+            10)
 
-        self.create_timer(3.0, self._timer_callback)
+        self.create_timer(
+            3.0, # send a 2.0 second trajectory every 3.0 seconds
+            self._timer_callback)
 
     def _joint_info_callback(self, msg) -> None:
         """
@@ -43,15 +50,15 @@ class TestNode(Node):
 
         self.traj_msg.traj_data = np.zeros(TrajectoryMacros.TRAJECTORY_DATA_SIZE, dtype=np.float64)
         for i in range(7):
-            self.traj_msg.traj_data[4 * i + 0] = self.q_current[i]
-            self.traj_msg.traj_data[4 * i + 1] = 0.0
-            self.traj_msg.traj_data[4 * i + 2] = 0.0
-            self.traj_msg.traj_data[4 * i + 3] = self.q_current[i] + 0.1
+            self.traj_msg.traj_data[4 * i + 0] = self.q_current[i] # starting from current position
+            self.traj_msg.traj_data[4 * i + 1] = 0.0 # starting from 0 velocity because we know the robot is stationary now
+            self.traj_msg.traj_data[4 * i + 2] = 0.0 # starting from 0 acceleration because we know the robot is stationary now
+            self.traj_msg.traj_data[4 * i + 3] = self.q_current[i] + 0.1 # move 0.1 radian forward for each joint
         
         current_time = time.time()
         self.traj_msg.start_time = current_time + 0.05
-        self.traj_msg.trajectory_duration = 2.0
-        self.traj_msg.duration = 2.0
+        self.traj_msg.trajectory_duration = 2.0 # seconds
+        self.traj_msg.duration = 2.0 # seconds
         
         self.traj_msg.dof = 7
         self.traj_msg.trajectory_type = TrajectoryMacros.ARMOUR_TRAJ

@@ -15,13 +15,13 @@ First, check the official [Kinova API repository](https://github.com/Kinovarobot
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-3. Every time you open a new terminal, remember to source the workspace to load custom ros2 messages:
+You would also need to run this compile command **every time** you make changes to the code.
+
+3. **Every time** you open a new terminal, remember to source the workspace to load custom ros2 messages:
 
 ```bash
 source install/setup.bash
 ```
-
----
 
 ## Install Through Docker (Strongly Recommended Setup)
 
