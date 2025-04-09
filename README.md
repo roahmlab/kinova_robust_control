@@ -1,60 +1,37 @@
 # kinova_robust_control
 
-## Install
+This repository hosts C++ implementation of the robust controller introduced in [ARMOUR](https://roahmlab.github.io/armour/) on [Kinova-gen3](https://www.kinovarobotics.com/product/gen3-robots) hardware.
 
-In `planning_wksp/`, run the following command to compile the code:
-```shell
-colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-```
+This repository not only integrates the default position control from Kinova, but also implements torque control for **tracking a series of continuous trajectory** robustly under **model uncertainties**.
 
-Then source the generated setup files by running 
-```shell
-source install/setup.bash
-```
-Note that you need to do this **EVERY TIME** you open a new terminal!
-
-## Motivation
-
-For this repo, there are two groups of target audience.
-
-### I don't care about the controller or the trajectory, just go to somewhere for me
-
-Simply initialize a kinova robot official control instance in one terminal that specifically corresponds to a robot's physcal address:
-```shell
-ros2 run roahm_kortex ros_kortex_system --ros-args --params-file ./config.yaml
-```
-Specify proper parameters in `planning_wksp/config.yaml` (under `/ros_kortex_system`):
-1. `ip`: which robot do you want to control? `192.168.1.10` for the arm in the workspace and `192.168.1.20` for the arm in the living room scenario.
-
-This gives you a kinova robot control instance that is always listening to you and waiting for your service request.
-
-### I don't care about the controller, just track a trajectory for me
-
-Simply initialize a controller instance in one terminal that specifically corresponds to a robot's physcal address:
-```shell
-ros2 run roahm_kortex control_system --ros-args --params-file ./config.yaml
-```
-Specify proper parameters in `planning_wksp/config.yaml` (under `/control_system`):
-1. `ip`: which robot do you want to control? `192.168.1.10` for the arm in the workspace and `192.168.1.20` for the arm in the living room scenario.
-2. `controller_type`: which controller do you want to use? Currently only `ARMOUR` and `PID` are supported. And there are corresponding controller parameters that you can play with.
-
-This gives you a controller instance that is always listening to you. 
-Send a proper trajectory message to `/trajectory` channel and the controller will receive that and honestly track that!
-
-### I want to play with the controllers
-
-You can implement your own controller in `roahm_dynamics` for testing.
-Simply add your new controller implementation and add access to that for the controller instance in `roahm_kortex/src/control_system.cpp`.
+## Structure
+The functions in kinova_robust_control codebase are organized into several folders.
+- `roahm_dynamics`: Core controller implementations
+- `roahm_experiments`: Example scripts for testing controllers
+- `roahm_kortex`: Interface with Kinova robots
+- `roahm_msgs`: ROS2 message and service definitions
+- `roahm_system`: System architecture and block-based design
+- `roahm_trajectories`: Trajectory computation and management
+- `roahm_utils`: Utility functions and logging
 
 ## Getting Started
 
-Read the following instructions in sequence:
-1. Read [roahm_trajectories/README.md](roahm_trajectories/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
-2. Read [roahm_kortex/README.md](roahm_kortex/README.md) to learn more about the controller instance and related parameters.
-3. Read [roahm_experiments/README.md](roahm_experiments/README.md) for examples that send trajectory messages to the controller instance.
+### Install
+We provide a detailed documentation on how to install the code in [installation/README.md](installation/README.md).
 
-Other stuff
-1. Read [roahm_msgs/README.md](roahm_msgs/README.md) for definitions of all ROS messages.
+### Before using this codebase:
+1. Due to limited time and resources, we were not able to make this codebase fully user-friendly. We strongly recommend carefully reviewing all available documentation, especially the ros2 Python scripts in `roahm_experiments/`, to fully understand how the controller operates.
+2. You should make sure that your Kinova arm is equipped with an **emergency stop button**, so you can immediately shut it down in case of unexpected behavior.
+3. You should also make sure that there are no obstacles around the arm when you run the examples in `roahm_experiments/`.
+
+### Read the following READMEs in sequence:
+1. Read [roahm_dynamics/README.md](roahm_dynamics/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
+2. Read [roahm_trajectories/README.md](roahm_trajectories/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
+3. Read [roahm_kortex/README.md](roahm_kortex/README.md) to learn more about the controller instance and related parameters.
+4. Read [roahm_experiments/README.md](roahm_experiments/README.md) for examples that send trajectory messages to the controller instance and move the robot along the desired trajectories.
+
+### Other stuff for customizing the functions:
+1. Read [roahm_msgs/README.md](roahm_msgs/README.md) for definitions of all ros2 messages if you want to customize your own messages.
 
 ## Acknowlgement
 
@@ -63,7 +40,9 @@ We gratefully acknowledge their work and contribution to the open-source robotic
 
 ## Authors
 
-[Bohao Zhang](https://cfather.github.io/) (jimzhang@umich.edu): **Current maintainer**, Robust controller in C++.
+This work is developed in [ROAHM Lab](https://www.roahmlab.com/). 
+
+[Bohao Zhang](https://cfather.github.io/) (jimzhang@umich.edu): **Current maintainer**, Robust controller implementation in C++.
 
 Jonathan Michaux (jmichaux@umich.edu): Robust controller theory developer.
 
@@ -72,6 +51,22 @@ Patrick D. Holmes (pdholmes@umich.edu): Robust controller theory developer.
 Che Chen (cctom@umich.edu): Original creator and maintainer of the repository.
 
 Zichang Zhou (zhouzichang1234@gmail.com): Implemented other controller comparisons.
+
+## License
+
+`ARMOUR` is released under a [GNU license](LICENSE). 
+For a closed-source version of `ARMOUR` for commercial purpose, please contact the authors. 
+
+An overview of the theoretical and implementation details has been published in a[arxiv](https://arxiv.org/abs/2301.13308). 
+If you use `ARMOUR` in an academic work, please cite using the following BibTex entry:
+```bibtex
+@article{michaux2023can,
+  title={Can't Touch This: Real-Time, Safe Motion Planning and Control for Manipulators Under Uncertainty},
+  author={Michaux, Jonathan and Holmes, Patrick and Zhang, Bohao and Chen, Che and Wang, Baiyue and Sahgal, Shrey and Zhang, Tiancheng and Dey, Sidhartha and Kousik, Shreyas and Vasudevan, Ram},
+  journal={arXiv preprint arXiv:2301.13308},
+  year={2023}
+}
+```
 
 ## Rules
 If you have any questions or suggestions, please raise them in [Issues](https://github.com/roahmlab/kinova_robust_control/issues).
