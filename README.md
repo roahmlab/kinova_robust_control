@@ -6,13 +6,28 @@ This repository not only integrates the default position control from Kinova, bu
 
 ## Structure
 The functions in kinova_robust_control codebase are organized into several folders.
-- `dynamics`: Core controller implementations
+- `customized_msgs`: ROS2 message and service definitions
+- `dynamics`: Regressor-based inverse dynamics and controller implementations
 - `experiments`: Example scripts for testing controllers
 - `kortex`: Interface with Kinova robots
-- `customized_msgs`: ROS2 message and service definitions
 - `system`: System architecture and block-based design
 - `trajectories`: Trajectory computation and management
 - `utils`: Utility functions and logging
+
+```mermaid
+graph TD
+    A[experiments]
+    A --> B[customized_msgs::TrajectoryMsg]
+    B --> C[trajectories]
+    C --> E[dynamics]
+    E --> F[customized_msgs::TorqueControl]
+    E --> D[system]
+    G --> D
+    F --> G[kortex]
+    G --> H[customized_msgs::KortexMeasurements]
+    H --> A
+    H --> E
+```
 
 ## Getting Started
 
@@ -25,7 +40,7 @@ We provide a detailed documentation on how to install the code in [installation/
 3. You should also make sure that there are no obstacles around the arm when you run the examples in `experiments/`.
 
 ### Read the following READMEs in sequence:
-1. Read [dynamics/README.md](dynamics/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
+1. Read [dynamics/README.md](dynamics/README.md) to learn more about the controller interface and architecture if you want to implement your own controller.
 2. Read [trajectories/README.md](trajectories/README.md) to learn how to formulate a proper trajectory message. The controller will not execute the trajectory if the trajectory is invalid.
 3. Read [kortex/README.md](kortex/README.md) to learn more about the controller instance and related parameters.
 4. Read [experiments/README.md](experiments/README.md) for examples that send trajectory messages to the controller instance and move the robot along the desired trajectories.
