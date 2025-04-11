@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>kinova_robust_control</title>
+		<meta charset="utf-8" />
+		 <meta name="viewport" content="width=1000">
+		<link rel="stylesheet" href="assets/css/main.css" />
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-LS6L6LB7RX"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-LS6L6LB7RX');
+		</script>
+
+		<meta property="og:url"           content="https://roahmlab.github.io/kinova_robust_control/" />
+	    <meta property="og:type"          content="website" />
+	    <meta property="og:title"         content="kinova_robust_control" />
+	    <meta property="og:description"   content="Robust Tracking Controller Under Model Uncertainties" />
+	    
+
+	</head>
+	<body id="top">
+		<!-- Main -->
+			<div id="main" style="padding-bottom:1em; padding-top: 5em; width: 60em; max-width: 70em; margin-left: auto; margin-right: auto;">
+					<section id="four">
+						<div class="box alt" style="margin-bottom: 1em;">
+							<div class="row 0% uniform" style="width: 100%; display: flex; justify-content: space-between;">
+								<!-- UM Robotics Logo -->
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 20%">
+									<span class="image fit" style="margin-bottom: 0.5em; margin-top: 0.3em">
+										<img src="images/MRoboticsicon.svg" alt="">
+									</span>
+								</div>
+								<!-- RoahmLab Logo -->
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 22%">
+									<span class="image fit" style="margin-bottom: 0.5em; margin-top: 0.3em">
+										<img src="images/ROAHMLABicon.png" alt="">
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<h1 style="text-align: center; margin-bottom: 0; color: #8C1515; font-size: 300%">kinova_robust_control</h1>
+						<h2 style="text-align: center; white-space: nowrap; font-size: 200%">Robust Tracking Controller Under Model Uncertainties</h2>
+
+						<p style="color: black;">
+							This repository hosts C++ implementation of the robust controller introduced in <a href="https://roahmlab.github.io/armour/">ARMOUR</a> on <a href="https://www.kinovarobotics.com/product/gen3-robots">Kinova-gen3</a> hardware.
+							This repository not only integrates the default position control from Kinova, but also implements torque control for tracking <b>a series of continuous trajectories</b> robustly under <b>model uncertainties</b>.
+						</p>
+
+						<hr>
+						<h3>Links</h3>
+
+						<div class="box alt" style="margin-bottom: 1em;">
+							<div class="row 50% uniform" style="width: 100%;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+									<a href="https://arxiv.org/abs/2301.13308">
+										<span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/documentation.svg" alt=""/>
+										</span>
+										Paper
+									</a>
+								</div>
+
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+									<a href="https://github.com/roahmlab/kinova_robust_control">
+										<span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/github_logo.svg" alt=""/>
+										</span>
+										Codebase
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<hr>
+						<h3>Examples</h3>
+
+						<div class="box alt" style="margin-bottom: 1em;">
+							<div class="row 50% uniform" style="width: 100%; color: black;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 100%">
+									Kinova default position control examples. <br>
+								</div>
+							</div>
+							<div class="row 50% uniform" style="width: 100%; color: black;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/test_services.py">test_services.py</a>
+								</div>
+								
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/pick_up_example.py">pick_up_example.py</a>
+								</div>
+							</div>
+							<div class="row 50% uniform" style="width: 100%;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/80820379-edf6-4b12-8b7c-86891635e3b7" type="video/mp4"> </video>
+									</span>
+								</div>
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/bd93f226-ebd8-4436-8a05-b8503fde701b" type="video/mp4"> </video>
+									</span>
+								</div>
+							</div>
+
+							<div class="row 50% uniform" style="width: 100%; color: black;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 100%">
+									Robust tracking control examples. <br>
+								</div>
+							</div>
+							<div class="row 50% uniform" style="width: 100%; color: black;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/test_trajectories.py">test_trajectories.py</a>
+								</div>
+								
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/test_trajectories_dual_arm.py">test_trajectories_dual_arm.py</a>
+								</div>
+							</div>
+							<div class="row 50% uniform" style="width: 100%;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/521c4d07-8086-47da-9637-84a6cab555ab" type="video/mp4"> </video>
+									</span>
+								</div>
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/d1d92865-e3a9-4314-84a0-df1ee14b39f4" type="video/mp4"> </video>
+									</span>
+								</div>
+							</div>
+
+							<div class="row 50% uniform" style="width: 100%; color: black;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/test_multiple_continuous_trajectories.py">test_multiple_continuous_trajectories.py</a>
+								</div>
+								
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: left; width: 45%">
+									<a href="https://github.com/roahmlab/kinova_robust_control/blob/humble/experiments/scripts/test_receding_horizon_trajectories.py">test_receding_horizon_trajectories.py</a>
+								</div>
+							</div>
+							<div class="row 50% uniform" style="width: 100%;">
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/29d44aec-1572-4c46-9f77-c716e0f37897" type="video/mp4"> </video>
+									</span>
+								</div>
+								<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 45%">
+									<span class="image fit" style="margin-bottom: 0.5em;">
+										<video controls autoplay loop muted playsinline style="width: 100%; margin-right: 5%;"><source src="https://github.com/user-attachments/assets/b1354be9-8138-4c72-8e5c-aaf48e474279" type="video/mp4"> </video>
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<hr>
+						<h3>Developers</h3>
+						<section>
+							<div class="box alt" style="margin-bottom: 1em;">
+								<div class="row 50% uniform" style="width: 100%;">
+									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<a href="https://cfather.github.io"><span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/bohao_photo.jfif" alt="" style="border-radius: 50%;" /></span>Bohao Zhang<sup>1</sup></a></div>
+
+									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<a href="https://jonmichaux.com/"><span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/jon.jpg" alt="" style="border-radius: 50%;" /></span>Jonathan Michaux<sup>1</sup></a></div>
+
+									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<a href="https://www.linkedin.com/in/patrick-holmes-umich/"><span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/patrick.jfif" alt="" style="border-radius: 50%;" /></span>Patrick Holmes<sup>3</sup></a></div>
+
+									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<a href="https://player7.cc/"><span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/cc23.jpg" alt="" style="border-radius: 50%;" /></span>Che Chen<sup>1</sup></a></div>
+
+									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/randomhuman.png" alt="" style="border-radius: 50%;" /></span>Zichang Zhou<sup>1</sup></a></div>
+							
+ 									<div class="2u" style="font-size: 1em; line-height: 1.5em; text-align: center; width: 12%">
+										<a href="https://www.roahmlab.com/ram-personal"><span class="image fit" style="margin-bottom: 0.5em;">
+											<img src="images/ram_photo.jfif" alt="" style="border-radius: 50%;" /></span>Ram Vasudevan<sup>1</sup></a></div>
+												
+								</div>
+							</div>
+						</section>
+						<p>
+							<sup>1</sup> Robotics Institute, University of Michigan, Ann Arbor
+							<sup>3</sup> Figure AI
+						</p>
+						<h4>This work is developed under <a href="https://www.roahmlab.com">RoahmLab</a>.</h4>
+				
+
+						<hr>
+						<h3>BibTeX</h3>
+						<pre><code>@article{michaux2023can,
+							title={Can't Touch This: Real-Time, Safe Motion Planning and Control for Manipulators Under Uncertainty},
+							author={Michaux, Jonathan and Holmes, Patrick and Zhang, Bohao and Chen, Che and Wang, Baiyue and Sahgal, Shrey and Zhang, Tiancheng and Dey, Sidhartha and Kousik, Shreyas and Vasudevan, Ram},
+							journal={arXiv preprint arXiv:2301.13308},
+							year={2023}
+						  }
+					    	</code></pre>
+						
+						<hr>
+						<h3>Contact</h3>
+				        <p>
+						    We are actively developing the codebase and appreciate any feedback! <br>
+						    If you have any questions about the paper, please feel free to contact <a href="https://cfather.github.io/">Bohao Zhang</a>. <br>
+						    If you have any questions about the code and would like to report any bugs or problems, please raise a new issue in the <a href="https://github.com/roahmlab/kinova_robust_control/issues">Issues page</a>. We will try to respond to it as soon as possible. <br>
+						    If you would like to request any related new features and have suggestions on how to improve the performance, please raise a new discussion in the <a href="https://github.com/roahmlab/kinova_robust_control/discussions">Discussions page</a>.
+						</p>
+
+						<hr>
+						<h3>Related Projects</h3>
+						<a href="https://roahmlab.github.io/RAPTOR/">RAPTOR</a> - RAPid and Robust Trajectory Optimization for Robots
+						<br>
+						<a href="https://roahmlab.github.io/armour/">ARMOUR</a> - Autonomous Robust Manipulation via Optimization with Uncertainty-aware Reachability
+						<br>
+						<a href="https://roahmlab.github.io/waitr-dev/">WAITR</a> - Wrench Analysis for Inertial Transport using Reachability
+					    <br>
+						<a href="https://roahmlab.github.io/sparrows/">SPARROWS</a> - Safe Planning for Articulated Robots Using Reachability-based Obstacle Avoidance With Spheres
+					</section>
+			</div>
+
+			<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+	</body>
+</html>
