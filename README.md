@@ -4,6 +4,8 @@ This repository hosts C++ implementation of the robust controller introduced in 
 
 This repository not only integrates the default position control from Kinova, but also implements torque control for **tracking a series of continuous trajectory** robustly under **model uncertainties**.
 
+Check demonstration videos corresponding to our example scripts at [our website](https://roahmlab.github.io/kinova_robust_control/).
+
 ## Structure
 The functions in kinova_robust_control codebase are organized into several folders.
 - `customized_msgs`: ROS2 message and service definitions
