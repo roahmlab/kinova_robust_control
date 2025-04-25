@@ -42,15 +42,22 @@ git clone --recurse-submodules https://github.com/roahmlab/kinova_robust_control
 
 ### 2. Update `kinova_robust_control` (Optional)
 
+Go to `kinova_robust_control_docker` first:
+```bash
+cd kinova_robust_control_docker
+```
+
+Update all the submodules, including `kinova_robust_control`:
 ```bash
 git submodule update --init --recursive
 ```
 
 ### 3. Build the Docker Container in VS Code
 
-1. Open VS Code.
-2. Press `Ctrl+Shift+P` and search for: `Dev Containers: Rebuild and Reopen Container`.
-3. Select it to automatically build the container using the provided Dockerfile.
+ - Open VS Code.
+ - Open `kinova_robust_control_docker` folder in VS Code.
+ - Press `Ctrl+Shift+P` and search for: `Dev Containers: Rebuild and Reopen Container`.
+ - Select it to automatically build the container using the provided Dockerfile.
 
 ### 4. Build `kinova_robust_control`
 
@@ -65,3 +72,17 @@ As before, source the workspace after opening a new terminal:
 ```bash
 source install/setup.bash
 ```
+
+## Important Configuration Note
+
+You may need to modify include paths in the following files:
+- [dynamics/CMakeLists.txt](../dynamics/CMakeLists.txt) (line 36)
+- [kortex/CMakeLists.txt](../kortex/CMakeLists.txt) (line 32)
+
+Both files contain this include directive:
+```cmake
+include_directories(/workspaces/kinova_robust_control_docker/install/customized_msgs/include)
+```
+
+This path is hardcoded to match our default Docker workspace. 
+Depending on your build environment and workspace name, you'll need to update this path to point to your `customized_msgs` package location.
