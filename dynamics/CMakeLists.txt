@@ -33,7 +33,7 @@ find_package(system REQUIRED)
 
 # temporary fix for customized_msgs include dir
 # message(FATAL_ERROR "customized_msgs: ${msgs_INCLUDE_DIRS}")
-include_directories(/workspaces/kinova_robust_control_docker/install/customized_msgs/include)
+include_directories(/workspaces/OnlineSafeSysID/install/customized_msgs/include)
 
 # urdf support
 find_package(urdf)

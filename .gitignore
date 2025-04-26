@@ -1,0 +1,59 @@
+# Ignore ROS bag files
+*.bag
+*.log
+*.obj
+log/
+models/endeffector_inertial_parameters.txt
+
+# Ignore everything in the scripts/data directory
+scripts/data/
+scripts/logs
+vgcore*
+
+# Catkin build folders
+build/
+devel/
+install/
+
+# CMake build files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# Generated files
+*.pyc
+*.pyo
+*.swp
+*~
+*.log
+*.orig
+
+# IDE specific files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.idea/
+*.suo
+*.user
+*.sln
+*.swp
+*.swo
+
+# Dependency sources
+rosdep.yaml
+rosinstall
+scripts/logs/latest
+scripts/roahm-vscode-document-generator-0.0.16.vsix
+
+# docker
+*.zip
+docker/pardiso/
+HSL/
+
+# matlab files
+*.mat
+*.asv
+
+*.pyc

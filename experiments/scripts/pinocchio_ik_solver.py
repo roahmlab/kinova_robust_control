@@ -60,6 +60,12 @@ class pinocchioInverseKinematicsSolver:
             [0,  0, -1]
         ]) # gripper pointing along the negative direction of z axis (pointing down)
         
+        self.desiredRotation_z_neg_another = np.array([
+            [1,  0,  0],   
+            [0, -1,  0],   
+            [0,  0, -1]
+        ]) # gripper pointing along the negative direction of z axis (pointing down) but another orientation
+        
     def solve(
         self,
         q0: np.ndarray, # initial guess
