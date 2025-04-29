@@ -69,6 +69,10 @@ Che Chen (cctom@umich.edu): Original creator and maintainer of the repository.
 
 Zichang Zhou (zhouzichang1234@gmail.com): Implemented other controller comparisons.
 
+Challen Enninful Adu (enninful@umich.edu): collision avoidance demos.
+
+Cesar Ramos Chuquiure (cesarch@umich.edu): collision avoidance demos.
+
 ## License
 
 `ARMOUR` is released under a [3-clause BSD license](LICENSE). 
