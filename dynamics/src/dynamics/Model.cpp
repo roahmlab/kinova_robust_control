@@ -296,6 +296,7 @@ void model::changeEndEffectorInertial(const Vec10& new_phi,
             new_phi(i) > new_phi_ub(i)) {
             std::cerr << i << ' ' << new_phi(i) << ' ' << new_phi_lb(i) << ' ' << new_phi_ub(i) << std::endl;
             // throw std::invalid_argument("Inconsistent end effector inertial parameter bounds!");
+            std::cerr << "Inconsistent end effector inertial parameter bounds!" << std::endl;
             return; // do not throw an exception, just return and ignore the change
         }
     }

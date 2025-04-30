@@ -37,6 +37,8 @@ install(
   scripts/test_receding_horizon_trajectories.py
   scripts/test_receding_horizon_trajectories_armtd.py
   scripts/pinocchio_ik_solver.py
+  scripts/run_online_sysid_demo.py
+  scripts/run_offline_sysid_demo.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
