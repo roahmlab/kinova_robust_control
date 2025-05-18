@@ -36,6 +36,7 @@ install(
   scripts/test_multiple_continuous_trajectories.py
   scripts/test_receding_horizon_trajectories.py
   scripts/test_receding_horizon_trajectories_armtd.py
+  scripts/test_collision_avoidance_teleoperation.py
   scripts/pinocchio_ik_solver.py
   DESTINATION lib/${PROJECT_NAME}
 )

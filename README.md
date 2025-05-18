@@ -1,10 +1,13 @@
-# kinova_robust_control
+# kinova_robust_control (humble-with-RAPTOR)
 
 This repository hosts C++ implementation of the robust controller introduced in [ARMOUR](https://roahmlab.github.io/armour/) on [Kinova-gen3](https://www.kinovarobotics.com/product/gen3-robots) hardware.
 
 This repository not only integrates the default position control from Kinova, but also implements torque control for **tracking a series of continuous trajectory** robustly under **model uncertainties**.
 
 Check demonstration videos corresponding to our example scripts at [our website](https://roahmlab.github.io/kinova_robust_control/).
+
+Note that this branch specifically contains examples related to [RAPTOR](https://roahmlab.github.io/RAPTOR/), which requires [HSL](https://www.hsl.rl.ac.uk/) libraries.
+Please refer to [installation/README](installation/README.md) for more details to install this properly.
 
 ## Structure
 The functions in kinova_robust_control codebase are organized into several folders.
