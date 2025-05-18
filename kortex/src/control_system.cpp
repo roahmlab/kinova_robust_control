@@ -2,6 +2,7 @@
 #include "dynamics/PassivityControlBlock.hpp"
 #include "dynamics/PIDControlBlock.hpp"
 #include "dynamics/GravityCompensationPIDControlBlock.hpp"
+#include "dynamics/ImpedanceControlBlock.hpp"
 #include "utils/Utils.hpp"
 #include "kortex/JointFilterBlock.hpp"
 #include "kortex/KortexBlock.hpp"
@@ -65,6 +66,12 @@ class Wrapper
         double phi_p;
         double phi_i;
         double max_error;
+    };
+
+    struct ImpedanceParams
+    {
+        VecX Kp;
+        VecX Kd;
     };
 
     struct FilterSettings
@@ -270,6 +277,13 @@ class Wrapper
         //     altoff_params.phi_p = 
         //         ros_node->get_parameter("phi_p").as_double();
         // }
+        else if (controller_type == "IMPEDANCE")
+        {
+            impedance_params.Kp = Utils::convertVectorToEigen(
+                ros_node->get_parameter("Kp").as_double_array());
+            impedance_params.Kd = Utils::convertVectorToEigen(
+                ros_node->get_parameter("Kd").as_double_array());
+        }
         else {
             std::cerr << controller_type << std::endl;
             throw std::invalid_argument("Invalid controller type");
@@ -357,6 +371,17 @@ class Wrapper
 
         //     sys.add_block(ctrl_block);
         // }
+        else if (controller_type == "IMPEDANCE")
+        {
+            auto ctrl_block = Dynamics::ImpedanceControlBlock::make_shared(
+                "Controller", modelPtr_);
+
+            ctrl_block->setParameters(
+                impedance_params.Kp, 
+                impedance_params.Kd);
+
+            sys.add_block(ctrl_block);
+        }
         else 
         {
             std::cerr << controller_type << std::endl;
@@ -469,6 +494,7 @@ class Wrapper
     PIDParams pid_params;
     ArmourParams armour_params;
     AltoffParams altoff_params;
+    ImpedanceParams impedance_params;
     FilterSettings filter_settings;
 
     int robot_id = -1;

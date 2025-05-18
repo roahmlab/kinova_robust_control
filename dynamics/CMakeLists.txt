@@ -79,6 +79,7 @@ add_library(
   src/dynamics/GravityCompensationPIDControlBlock.cpp
   src/dynamics/PassivityControlBlock.cpp
   src/dynamics/ARMOURControlBlock.cpp
+  src/dynamics/ImpedanceControlBlock.cpp
   )
 target_link_libraries(${PROJECT_NAME}
   pinocchio::pinocchio)

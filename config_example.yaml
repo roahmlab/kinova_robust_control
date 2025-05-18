@@ -30,7 +30,7 @@
     # PARAMS
     ###
     # controllers
-    controller_type: "PID" # PID, GRAV_PID, ARMOUR 
+    controller_type: "PID" # PID, GRAV_PID, ARMOUR, IMPEDANCE
 
       # PID
     Kp: [120.0, 200.0, 120.0, 120.0, 120.0, 20.0, 20.0]
@@ -51,6 +51,10 @@
     kappa_p: 20.0
     kappa_i: 2.0
     max_error: 1.
+
+    #   # Impedance controller parameters
+    # Kp: [10.0, 10.0, 10.0, 10.0, 5.0, 5.0, 5.0]
+    # Kd: [2.0, 2.0, 2.0, 2.0, 0.5, 0.5, 0.5]
 
     # joint filter
     enable_joint_filter: false
