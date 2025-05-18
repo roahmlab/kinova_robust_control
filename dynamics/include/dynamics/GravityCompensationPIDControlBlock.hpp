@@ -38,8 +38,7 @@ class GravityCompensationPIDControlBlock final: public PIDControlBlock
     /**
      * @brief Ctor taking non-interval model directly
      * @param block_name: name of control block
-     * @param rob_model: model of robot
-     * @param variance: variance of the interval
+     * @param robot_model_input: model of robot
      **/
     GravityCompensationPIDControlBlock(
         const std::string &block_name,

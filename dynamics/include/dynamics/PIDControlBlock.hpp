@@ -43,7 +43,7 @@ public:
     /**
      * @brief Ctor taking non-interval model directly
      * @param block_name: name of control block
-     * @param rob_model: model of robot
+     * @param robot_model_input: model of robot
      **/
     PIDControlBlock(
         const std::string &block_name,
